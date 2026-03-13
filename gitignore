@@ -1,0 +1,7 @@
+# Java Stuff
+backend/target/
+*.jar
+*.class
+*.log
+
+.mvn/wrapper/maven-wrapper.jar
