@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 @RestController
@@ -24,8 +24,8 @@ public class TripController {
 
     @GetMapping
     public ResponseEntity<Page<YellowTripData>> getTrips(
-            @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yy") LocalDateTime startDate,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yy") LocalDateTime endDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yy") LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yy") LocalDate endDate,
             @RequestParam(required = false) Integer passengers,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int pageSize

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Service
 public class TripService {
@@ -17,12 +18,14 @@ public class TripService {
     }
 
     public Page<YellowTripData> getTrips(
-        LocalDateTime startDate,
-        LocalDateTime endDate,
+        LocalDate startDate,
+        LocalDate endDate,
         Integer passengers,
         Pageable pageable
     )
     {
-        return tripRepository.findTrips(startDate, endDate, passengers, pageable);
+        LocalDateTime start = startDate != null ? startDate.atStartOfDay() : null;
+        LocalDateTime end = endDate != null ? endDate.atTime(23, 59, 59) : null;
+        return tripRepository.findTrips(start, end, passengers, pageable);
     }
 }
