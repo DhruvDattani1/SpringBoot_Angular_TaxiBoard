@@ -23,8 +23,8 @@ public class TripController {
 
     @GetMapping
     public ResponseEntity<Page<YellowTripData>> getTrips(
-            @RequestParam(required = false) LocalDateTime startDate,
-            @RequestParam(required = false) LocalDateTime endDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yy") LocalDateTime startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yy") LocalDateTime endDate,
             @RequestParam(required = false) Integer passengers,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int pageSize
