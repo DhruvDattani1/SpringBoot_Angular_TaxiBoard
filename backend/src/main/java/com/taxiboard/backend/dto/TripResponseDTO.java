@@ -2,12 +2,15 @@ package com.taxiboard.backend.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Builder;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
 public class TripResponseDTO {
 
     private Long tripId;

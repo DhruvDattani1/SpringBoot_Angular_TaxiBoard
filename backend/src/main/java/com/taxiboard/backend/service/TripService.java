@@ -1,6 +1,8 @@
 package com.taxiboard.backend.service;
 
+import com.taxiboard.backend.dto.TripResponseDTO;
 import com.taxiboard.backend.entity.YellowTripData;
+import com.taxiboard.backend.mapper.TripMapper;
 import com.taxiboard.backend.repository.YellowTripDataRepository;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
@@ -21,7 +23,7 @@ public class TripService {
         this.tripRepository = tripRepository;
     }
 
-    public Page<YellowTripData> getTrips(
+    public Page<TripResponseDTO> getTrips(
         LocalDate startDate,
         LocalDate endDate,
         Integer passengers,
@@ -45,6 +47,6 @@ public class TripService {
             return cb.and(predicates.toArray(new Predicate[0]));
         };
 
-        return tripRepository.findAll(spec, pageable);
+        return tripRepository.findAll(spec, pageable).map(TripMapper::toDTO);
     }
 }

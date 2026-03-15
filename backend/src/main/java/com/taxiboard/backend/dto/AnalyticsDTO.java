@@ -2,11 +2,14 @@ package com.taxiboard.backend.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Builder;
+
 
 import java.math.BigDecimal;
 
 @Getter
 @Setter
+@Builder
 public class AnalyticsDTO {
 
     private Long totalTrips;

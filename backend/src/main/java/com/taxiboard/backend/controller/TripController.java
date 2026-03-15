@@ -1,6 +1,6 @@
 package com.taxiboard.backend.controller;
 
-import com.taxiboard.backend.entity.YellowTripData;
+import com.taxiboard.backend.dto.TripResponseDTO;
 import com.taxiboard.backend.service.TripService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.data.domain.Page;
@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
-
 
 @RestController
 @RequestMapping("/api/trips")
@@ -23,7 +22,7 @@ public class TripController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<YellowTripData>> getTrips(
+    public ResponseEntity<Page<TripResponseDTO>> getTrips(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @RequestParam(required = false) Integer passengers,

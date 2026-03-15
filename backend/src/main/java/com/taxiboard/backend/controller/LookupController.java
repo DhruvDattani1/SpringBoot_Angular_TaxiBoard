@@ -1,13 +1,11 @@
 package com.taxiboard.backend.controller;
 
-import com.taxiboard.backend.entity.PaymentType;
-import com.taxiboard.backend.entity.Vendor;
-import com.taxiboard.backend.entity.TaxiZone;
+import com.taxiboard.backend.dto.PaymentTypeDTO;
+import com.taxiboard.backend.dto.TaxiZoneDTO;
+import com.taxiboard.backend.dto.VendorDTO;
 import com.taxiboard.backend.service.LookupService;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -21,17 +19,17 @@ public class LookupController {
     }
 
     @GetMapping("/paymenttypes")
-    public ResponseEntity<List<PaymentType>> getPaymentTypes() {
+    public ResponseEntity<List<PaymentTypeDTO>> getPaymentTypes() {
         return ResponseEntity.ok(lookupService.getPaymentTypes());
     }
 
     @GetMapping("/vendors")
-    public ResponseEntity<List<Vendor>> getVendors() {
+    public ResponseEntity<List<VendorDTO>> getVendors() {
         return ResponseEntity.ok(lookupService.getVendors());
     }
 
     @GetMapping("/zones")
-    public ResponseEntity<List<TaxiZone>> getZones(
+    public ResponseEntity<List<TaxiZoneDTO>> getZones(
             @RequestParam(required = false) String borough
     ) {
         return ResponseEntity.ok(lookupService.getZones(borough));
