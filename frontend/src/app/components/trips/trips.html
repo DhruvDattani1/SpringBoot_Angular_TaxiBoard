@@ -1,1 +1,74 @@
-<p>trips works!</p>
+<div style="padding: 16px; max-width: 1200px; margin: 0 auto;">
+
+  <h2>NYC Taxi Trips</h2>
+
+  <form [formGroup]="filterForm" (ngSubmit)="applyFilters()">
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+
+      <input type="date" formControlName="startDate" placeholder="Start Date" />
+      <input type="date" formControlName="endDate" placeholder="End Date" />
+      <input type="number" formControlName="passengers" placeholder="Passengers" min="1" />
+
+      <select formControlName="paymentType">
+        <option value="">All Payment Types</option>
+        <option *ngFor="let pt of paymentTypes" [value]="pt.paymentTypeId">
+          {{ pt.paymentDescription }}
+        </option>
+      </select>
+
+      <select formControlName="pageSize">
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+
+      <button type="submit">Apply Filters</button>
+      <button type="button" (click)="initializeForm(); getTrips()">Reset</button>
+
+    </div>
+  </form>
+
+  <div *ngIf="loading">Loading...</div>
+
+  <div *ngIf="!loading">
+
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th>Pickup</th>
+            <th>Dropoff</th>
+            <th>Pickup Zone</th>
+            <th>Dropoff Zone</th>
+            <th>Passengers</th>
+            <th>Distance</th>
+            <th>Fare</th>
+            <th>Payment</th>
+            <th>Vendor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let trip of trips">
+            <td>{{ trip.pickupDatetime | date:'short' }}</td>
+            <td>{{ trip.dropoffDatetime | date:'short' }}</td>
+            <td>{{ trip.pickupZone }}</td>
+            <td>{{ trip.dropoffZone }}</td>
+            <td>{{ trip.passengerCount }}</td>
+            <td>{{ trip.tripDistance }}</td>
+            <td>{{ trip.fareAmount | currency }}</td>
+            <td>{{ trip.paymentType }}</td>
+            <td>{{ trip.vendor }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display: flex; gap: 12px; align-items: center; margin-top: 16px;">
+      <button (click)="prevPage()" [disabled]="currentPage === 0">Previous</button>
+      <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Next</button>
+    </div>
+
+  </div>
+
+</div>

@@ -1,15 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
-
 import { ApiService } from '../../services/api.service';
 import { Trip, Zone, Vendor, PaymentType, PagedResult } from '../../models/models';
+
 @Component({
   selector: 'app-trips',
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './trips.html',
   styleUrl: './trips.css',
 })
-export class Trips {
+export class Trips implements OnInit, OnDestroy {
 
   filterForm!: FormGroup;
   trips: Trip[] = [];
