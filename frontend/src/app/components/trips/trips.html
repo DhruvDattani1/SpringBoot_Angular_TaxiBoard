@@ -5,8 +5,8 @@
   <form [formGroup]="filterForm" (ngSubmit)="applyFilters()">
     <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
 
-      <input type="date" formControlName="startDate" placeholder="Start Date" />
-      <input type="date" formControlName="endDate" placeholder="End Date" />
+      <input type="date" formControlName="startDate" />
+      <input type="date" formControlName="endDate" />
       <input type="number" formControlName="passengers" placeholder="Passengers" min="1" />
 
       <select formControlName="paymentType">
@@ -17,20 +17,18 @@
       </select>
 
       <select formControlName="pageSize">
+        <option value="10">10</option>
         <option value="25">25</option>
         <option value="50">50</option>
-        <option value="100">100</option>
       </select>
 
       <button type="submit">Apply Filters</button>
-      <button type="button" (click)="initializeForm(); getTrips()">Reset</button>
+      <button type="button" (click)="initializeForm(); fetchTrips()">Reset</button>
 
     </div>
   </form>
 
-  <div *ngIf="loading">Loading...</div>
-
-  <div *ngIf="!loading">
+  <ng-container *ngIf="trips$ | async as result; else loading">
 
     <div style="overflow-x: auto;">
       <table style="width: 100%; border-collapse: collapse;">
@@ -48,7 +46,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let trip of trips">
+          <tr *ngFor="let trip of result.content">
             <td>{{ trip.pickupDatetime | date:'short' }}</td>
             <td>{{ trip.dropoffDatetime | date:'short' }}</td>
             <td>{{ trip.pickupZone }}</td>
@@ -69,6 +67,10 @@
       <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Next</button>
     </div>
 
-  </div>
+  </ng-container>
+
+  <ng-template #loading>
+    <div>Loading...</div>
+  </ng-template>
 
 </div>

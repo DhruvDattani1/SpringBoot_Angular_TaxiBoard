@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { Trip, Zone, Vendor, PaymentType, PagedResult } from '../../models/models';
 
@@ -20,9 +20,10 @@ export class Trips implements OnInit, OnDestroy {
   paymentTypes: PaymentType[] = [];
   currentPage = 0;
   totalPages = 0;
-  pageSize = 10;
-  loading = false;
 
+
+  trips$!: Observable<PagedResult<Trip>>;
+  private paramsSubject = new BehaviorSubject<any>({});
   private subscriptions = new Subscription();
 
   constructor(
@@ -33,7 +34,19 @@ export class Trips implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initializeForm();
     this.loadLookups();
-    this.getTrips();
+
+    this.trips$ = this.paramsSubject.pipe(
+      switchMap(params => this.api.getTrips(params))
+    );
+
+    this.subscriptions.add(
+      this.trips$.subscribe(response => {
+        this.totalPages = response.totalPages;
+        this.currentPage = response.number;
+      })
+    );
+
+    this.fetchTrips();
   }
 
   ngOnDestroy(): void {
@@ -46,9 +59,8 @@ export class Trips implements OnInit, OnDestroy {
       endDate: [''],
       passengers: [''],
       paymentType: [''],
-      pageSize: [''],
-
-    })
+      pageSize: [10]
+    });
   }
 
   loadLookups(): void {
@@ -63,43 +75,34 @@ export class Trips implements OnInit, OnDestroy {
     );
   }
 
-    getTrips(page: number = 0): void {
-    this.loading = true;
+  fetchTrips(page: number = 0): void {
     const form = this.filterForm.value;
-
     const params: any = {
-      page: page,
+      page,
       pageSize: form.pageSize || 10
     };
-
     if (form.startDate) params.startDate = form.startDate;
     if (form.endDate) params.endDate = form.endDate;
     if (form.passengers) params.passengers = form.passengers;
+    if (form.paymentType) params.passengers = form.paymentType;
 
-    this.subscriptions.add(
-      this.api.getTrips(params).subscribe((response: PagedResult<Trip>) => {
-        this.trips = response.content;
-        this.totalPages = response.totalPages;
-        this.currentPage = response.number;
-        this.loading = false;
-      })
-    );
+    this.paramsSubject.next(params);
   }
 
   applyFilters(): void {
     this.currentPage = 0;
-    this.getTrips(0);
+    this.fetchTrips(0);
   }
 
   nextPage(): void {
     if (this.currentPage < this.totalPages - 1) {
-      this.getTrips(this.currentPage + 1);
+      this.fetchTrips(this.currentPage + 1);
     }
   }
 
   prevPage(): void {
     if (this.currentPage > 0) {
-      this.getTrips(this.currentPage - 1);
+      this.fetchTrips(this.currentPage - 1);
     }
   }
 }
