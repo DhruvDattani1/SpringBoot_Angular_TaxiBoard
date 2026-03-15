@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { Analytics } from '../../models/models';
 import { RouterModule } from '@angular/router';
+import { dateRangeValidator } from '../../validators/date-range.validator';
 
 @Component({
   selector: 'app-analytics',
@@ -37,7 +38,9 @@ export class AnalyticsC implements OnInit {
     this.filterForm = this.fb.group({
       startDate: [''],
       endDate: ['']
-    });
+    },
+    { validators: dateRangeValidator}
+  );
   }
 
   fetchAnalytics(): void {

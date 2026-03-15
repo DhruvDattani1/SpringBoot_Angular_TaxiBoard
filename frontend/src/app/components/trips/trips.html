@@ -11,6 +11,11 @@
 
       <input type="date" formControlName="startDate" />
       <input type="date" formControlName="endDate" />
+
+       <div *ngIf="filterForm.hasError('invalidDateRange')"
+            style="color: red; width: 100%;">
+          End date cannot be before start date, reset and try again
+       </div>
       <input type="number" formControlName="passengers" placeholder="Passengers" min="1" />
 
       <select formControlName="paymentType">
@@ -40,7 +45,7 @@
         </option>
       </select>
 
-      <button type="submit">Apply Filters</button>
+      <button type="submit" [disabled]="filterForm.invalid">Apply Filters</button>
       <button type="button" (click)="initializeForm(); fetchTrips()">Reset</button>
 
     </div>

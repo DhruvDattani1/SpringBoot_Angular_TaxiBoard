@@ -5,6 +5,9 @@ import { BehaviorSubject, Observable, Subscription, switchMap, tap } from 'rxjs'
 import { ApiService } from '../../services/api.service';
 import { Trip, Zone, Vendor, PaymentType, PagedResult } from '../../models/models';
 import { RouterModule } from '@angular/router';
+import { dateRangeValidator } from '../../validators/date-range.validator';
+
+
 
 @Component({
   selector: 'app-trips',
@@ -60,7 +63,9 @@ export class Trips implements OnInit, OnDestroy {
       pickupZone: [''],
       vendor: [''],
       pageSize: [10]
-    });
+    },
+    { validators: dateRangeValidator }
+  );
   }
 
   loadLookups(): void {
@@ -92,6 +97,10 @@ export class Trips implements OnInit, OnDestroy {
   }
 
   applyFilters(): void {
+    if (this.filterForm.invalid) {
+      this.filterForm.markAllAsTouched();
+      return;
+    }
     this.currentPage = 0;
     this.fetchTrips(0);
   }

@@ -10,7 +10,13 @@
     <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
       <input type="date" formControlName="startDate" />
       <input type="date" formControlName="endDate" />
-      <button type="submit">Apply</button>
+      <div *ngIf="filterForm.hasError('invalidDateRange')"
+            style="color: red; width: 100%;">
+          End date cannot be before start date, reset and try again
+      </div>
+      <button type="submit" [disabled]="filterForm.invalid">
+        Apply
+      </button>
       <button type="button" (click)="resetFilters()">Reset</button>
     </div>
   </form>
