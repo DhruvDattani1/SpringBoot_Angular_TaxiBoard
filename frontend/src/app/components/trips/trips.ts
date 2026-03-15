@@ -20,7 +20,7 @@ export class Trips implements OnInit, OnDestroy {
   paymentTypes: PaymentType[] = [];
   currentPage = 0;
   totalPages = 0;
-  pageSize = 25;
+  pageSize = 10;
   loading = false;
 
   private subscriptions = new Subscription();
@@ -69,7 +69,7 @@ export class Trips implements OnInit, OnDestroy {
 
     const params: any = {
       page: page,
-      pageSize: form.pageSize
+      pageSize: form.pageSize || 10
     };
 
     if (form.startDate) params.startDate = form.startDate;
