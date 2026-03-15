@@ -59,6 +59,8 @@ export class Trips implements OnInit, OnDestroy {
       endDate: [''],
       passengers: [''],
       paymentType: [''],
+      pickupZone: [''],
+      vendor: [''],
       pageSize: [10]
     });
   }
@@ -85,6 +87,8 @@ export class Trips implements OnInit, OnDestroy {
     if (form.endDate) params.endDate = form.endDate;
     if (form.passengers) params.passengers = form.passengers;
     if (form.paymentType) params.paymentType = form.paymentType;
+    if (form.pickupZone) params.pickupZone = form.pickupZone;
+    if (form.vendor) params.vendor = form.vendor;
 
     this.paramsSubject.next(params);
   }

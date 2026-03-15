@@ -28,6 +28,8 @@ public class TripService {
         LocalDate endDate,
         Integer passengers,
         Integer paymentType,
+        Integer pickupZone,
+        Integer vendor,
         Pageable pageable
     ) {
         if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
@@ -50,6 +52,13 @@ public class TripService {
 
             if (paymentType != null) {
                 predicates.add(cb.equal(root.get("paymentType").get("paymentTypeId"), paymentType));
+            }
+
+            if (pickupZone != null) {
+                predicates.add(cb.equal(root.get("pickupLocation").get("locationId"), pickupZone));
+            }
+            if (vendor != null) {
+                predicates.add(cb.equal(root.get("vendor").get("vendorId"), vendor));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

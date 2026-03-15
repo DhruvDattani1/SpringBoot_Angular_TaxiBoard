@@ -22,6 +22,20 @@
         <option value="50">50</option>
       </select>
 
+      <select formControlName="pickupZone">
+        <option value="">All Zones</option>
+        <option *ngFor="let z of zones" [value]="z.locationId">
+          {{ z.zone }}
+        </option>
+      </select>
+
+      <select formControlName="vendor">
+        <option value="">All Vendors</option>
+        <option *ngFor="let v of vendors" [value]="v.vendorId">
+          {{ v.vendorName }}
+        </option>
+      </select>
+
       <button type="submit">Apply Filters</button>
       <button type="button" (click)="initializeForm(); fetchTrips()">Reset</button>
 
