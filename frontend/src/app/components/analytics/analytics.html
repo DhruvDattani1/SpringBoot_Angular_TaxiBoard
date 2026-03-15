@@ -1,1 +1,56 @@
-<p>analytics works!</p>
+<div style="padding: 16px; max-width: 1200px; margin: 0 auto;">
+
+  <h2>NYC Taxi Analytics</h2>
+
+  <form [formGroup]="filterForm" (ngSubmit)="applyFilters()">
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
+      <input type="date" formControlName="startDate" />
+      <input type="date" formControlName="endDate" />
+      <button type="submit">Apply</button>
+      <button type="button" (click)="resetFilters()">Reset</button>
+    </div>
+  </form>
+
+  <ng-container *ngIf="analytics$ | async as data; else loading">
+
+    <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+
+      <div style="flex: 1; min-width: 150px; padding: 16px; border: 1px solid #ccc; border-radius: 8px;">
+        <div style="font-size: 0.85rem; color: #666;">Total Trips</div>
+        <div style="font-size: 1.75rem; font-weight: bold;">{{ data.totalTrips | number }}</div>
+      </div>
+
+      <div style="flex: 1; min-width: 150px; padding: 16px; border: 1px solid #ccc; border-radius: 8px;">
+        <div style="font-size: 0.85rem; color: #666;">Average Fare</div>
+        <div style="font-size: 1.75rem; font-weight: bold;">{{ data.averageFare | currency }}</div>
+      </div>
+
+      <div style="flex: 1; min-width: 150px; padding: 16px; border: 1px solid #ccc; border-radius: 8px;">
+        <div style="font-size: 0.85rem; color: #666;">Average Distance</div>
+        <div style="font-size: 1.75rem; font-weight: bold;">{{ data.averageDistance | number:'1.2-2' }} mi</div>
+      </div>
+
+      <div style="flex: 1; min-width: 150px; padding: 16px; border: 1px solid #ccc; border-radius: 8px;">
+        <div style="font-size: 0.85rem; color: #666;">Total Revenue</div>
+        <div style="font-size: 1.75rem; font-weight: bold;">{{ data.totalRevenue | currency }}</div>
+      </div>
+
+      <div style="flex: 1; min-width: 150px; padding: 16px; border: 1px solid #ccc; border-radius: 8px;">
+        <div style="font-size: 0.85rem; color: #666;">Most Popular Pickup Zone</div>
+        <div style="font-size: 1.25rem; font-weight: bold;">{{ data.mostPopularPickupZone }}</div>
+      </div>
+
+      <div style="flex: 1; min-width: 150px; padding: 16px; border: 1px solid #ccc; border-radius: 8px;">
+        <div style="font-size: 0.85rem; color: #666;">Most Used Payment Type</div>
+        <div style="font-size: 1.25rem; font-weight: bold;">{{ data.mostUsedPaymentType }}</div>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+  <ng-template #loading>
+    <div>Loading analytics...</div>
+  </ng-template>
+
+</div>
