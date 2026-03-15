@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { TripsComponent } from './components/trips/trips';
-import { AnalyticsComponent } from './components/analytics/analytics';
+import { Trips } from './components/trips/trips';
+import { Analytics } from './components/analytics/analytics';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'trips', pathMatch: 'full'},
-  { path: 'trips', component: TripsComponent},
-  { path: 'trips', component: AnalyticsComponent},
+  { path: 'trips', component: Trips},
+  { path: 'trips', component: Analytics},
 
 
 ];
