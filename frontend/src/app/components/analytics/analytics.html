@@ -2,6 +2,10 @@
 
   <h2>NYC Taxi Analytics</h2>
 
+  <button routerLink="/trips" style="margin-bottom:16px;">
+    View Trips
+  </button>
+
   <form [formGroup]="filterForm" (ngSubmit)="applyFilters()">
     <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
       <input type="date" formControlName="startDate" />
@@ -32,7 +36,7 @@
 
       <div style="flex: 1; min-width: 150px; padding: 16px; border: 1px solid #ccc; border-radius: 8px;">
         <div style="font-size: 0.85rem; color: #666;">Total Revenue</div>
-        <div style="font-size: 1.75rem; font-weight: bold;">{{ data.totalRevenue | currency }}</div>
+        <div style="font-size: 1.75rem; font-weight: bold;">{{ data.totalRevenue | currency:'USD':'symbol':'1.0-0' }}</div>
       </div>
 
       <div style="flex: 1; min-width: 150px; padding: 16px; border: 1px solid #ccc; border-radius: 8px;">

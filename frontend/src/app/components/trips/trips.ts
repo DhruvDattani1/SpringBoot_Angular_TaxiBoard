@@ -4,10 +4,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { Trip, Zone, Vendor, PaymentType, PagedResult } from '../../models/models';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-trips',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './trips.html',
   styleUrl: './trips.css',
 })

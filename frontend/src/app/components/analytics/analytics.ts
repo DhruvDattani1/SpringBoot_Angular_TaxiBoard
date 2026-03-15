@@ -4,10 +4,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { Analytics } from '../../models/models';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-analytics',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './analytics.html',
   styleUrl: './analytics.css',
 })
