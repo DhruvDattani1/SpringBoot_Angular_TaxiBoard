@@ -84,7 +84,7 @@ export class Trips implements OnInit, OnDestroy {
     if (form.startDate) params.startDate = form.startDate;
     if (form.endDate) params.endDate = form.endDate;
     if (form.passengers) params.passengers = form.passengers;
-    if (form.paymentType) params.passengers = form.paymentType;
+    if (form.paymentType) params.paymentType = form.paymentType;
 
     this.paramsSubject.next(params);
   }

@@ -27,13 +27,15 @@ public class TripController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @RequestParam(required = false) Integer passengers,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "50") int pageSize
+            @RequestParam(defaultValue = "50") int pageSize,
+            @RequestParam(required = false) Integer paymentType
+
     ) {
         Pageable pageable = PageRequest.of(
                 page,
                 pageSize,
                 Sort.by("pickupDatetime").descending()
         );
-        return ResponseEntity.ok(tripService.getTrips(startDate, endDate, passengers, pageable));
+        return ResponseEntity.ok(tripService.getTrips(startDate, endDate, passengers, paymentType, pageable));
     }
 }
