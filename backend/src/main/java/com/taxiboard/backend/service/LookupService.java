@@ -45,7 +45,9 @@ public class LookupService {
         var zones = borough == null
                 ? taxiZoneRepository.findAll()
                 : taxiZoneRepository.findByBoroughIgnoreCase(borough);
-
+        if (borough != null && zones.isEmpty()) {
+            throw new IllegalArgumentException("Invalid borough: " + borough);
+        }
         return zones.stream()
                 .map(TaxiZoneMapper::toDTO)
                 .toList();

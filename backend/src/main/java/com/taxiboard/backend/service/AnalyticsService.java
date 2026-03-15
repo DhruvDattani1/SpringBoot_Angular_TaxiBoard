@@ -21,12 +21,15 @@ public class AnalyticsService {
     }
 
     public AnalyticsDTO getAnalytics(LocalDate startDate, LocalDate endDate) {
+        if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("startDate must be before endDate");
+        }
         LocalDateTime start = startDate != null ? startDate.atStartOfDay() : null;
         LocalDateTime end = endDate != null ? endDate.atTime(23, 59, 59) : null;
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
-        // --- Aggregates ---
+
         CriteriaQuery<Object[]> aggQuery = cb.createQuery(Object[].class);
         Root<YellowTripData> root = aggQuery.from(YellowTripData.class);
 
@@ -48,7 +51,6 @@ public class AnalyticsService {
         BigDecimal averageDistance = aggResult[2] != null ? BigDecimal.valueOf(((Number) aggResult[2]).doubleValue()).setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO;
         BigDecimal totalRevenue = aggResult[3] != null ? BigDecimal.valueOf(((Number) aggResult[3]).doubleValue()).setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO;
 
-        // --- Most Popular Pickup Zone ---
         CriteriaQuery<String> zoneQuery = cb.createQuery(String.class);
         Root<YellowTripData> zoneRoot = zoneQuery.from(YellowTripData.class);
         zoneQuery.select(zoneRoot.get("pickupLocation").get("zone"));
@@ -59,7 +61,6 @@ public class AnalyticsService {
         List<String> zones = entityManager.createQuery(zoneQuery).setMaxResults(1).getResultList();
         String mostPopularPickupZone = zones.isEmpty() ? "Unknown" : zones.get(0);
 
-        // --- Most Used Payment Type ---
         CriteriaQuery<String> paymentQuery = cb.createQuery(String.class);
         Root<YellowTripData> paymentRoot = paymentQuery.from(YellowTripData.class);
         paymentQuery.select(paymentRoot.get("paymentType").get("paymentDescription"));

@@ -29,6 +29,9 @@ public class TripService {
         Integer passengers,
         Pageable pageable
     ) {
+        if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("startDate must be before endDate");
+        }
         Specification<YellowTripData> spec = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
