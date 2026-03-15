@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { Trip, Zone, Vendor, PaymentType, PagedResult } from '../../models/models';
 
@@ -36,13 +36,10 @@ export class Trips implements OnInit, OnDestroy {
     this.loadLookups();
 
     this.trips$ = this.paramsSubject.pipe(
-      switchMap(params => this.api.getTrips(params))
-    );
-
-    this.subscriptions.add(
-      this.trips$.subscribe(response => {
-        this.totalPages = response.totalPages;
-        this.currentPage = response.number;
+      switchMap(params => this.api.getTrips(params)),
+      tap(response => {
+        this.totalPages = response.page.totalPages;
+        this.currentPage = response.page.number;
       })
     );
 
