@@ -243,9 +243,6 @@ Async Pipe → KPI Cards Render
 ![Analytics Dashboard UI](assets/images/Frontend_Analytics_1.png)
 ![Analytics Dashboard UI](assets/images/Frontend_Analytics_2.png)
 
-#### Filtering Behavior
-![Analytics Filters Applied](assets/images/Frontend_Analytics_2.png)
-
 #### API Calls (Network Layer)
 ![Analytics API Calls](assets/images/DevTools_Analytics.png)
 
