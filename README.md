@@ -209,9 +209,6 @@ Async Pipe → Table Render
 ![Trips UI](assets/images/Frontend_Trips_1.png)
 ![Trips UI](assets/images/Frontend_Trips_2.png)
 
-#### Filtering & Pagination in Action
-![Filters DevTools](assets/images/DevTools_Trips_1.png)
-
 #### API Calls (Network Layer)
 ![Network Calls](assets/images/DevTools_Trips_2.png)
 
