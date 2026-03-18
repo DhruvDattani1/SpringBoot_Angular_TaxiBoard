@@ -41,6 +41,21 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
 
+  certbot-renew:
+    image: certbot/certbot
+    container_name: certbot-renew
+    restart: always
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: >
+      sh -c "while :; do
+      certbot renew --webroot -w /var/www/certbot;
+      sleep 12h;
+      done"
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
