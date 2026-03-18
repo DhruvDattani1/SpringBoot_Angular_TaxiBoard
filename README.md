@@ -205,10 +205,15 @@ ApiService.getTrips(params)
 Async Pipe → Table Render
 ```
 
-![Frontend Example](assets/images/Frontend_Trips_1.png)
+#### UI Overview
+![Trips UI](assets/images/Frontend_Trips_1.png)
+![Trips UI](assets/images/Frontend_Trips_2.png)
 
+#### Filtering & Pagination in Action
+![Filters DevTools](assets/images/DevTools_Trips_1.png)
 
-![Frontend Example](assets/images/Frontend_Trips_2.png)
+#### API Calls (Network Layer)
+![Network Calls](assets/images/DevTools_Trips_2.png)
 
 
 ### Analytics Page
@@ -237,9 +242,15 @@ ApiService.getAnalytics(params)
 Async Pipe → KPI Cards Render
 ```
 
-![Frontend Example](assets/images/Frontend_Analytics_1.png)
+#### UI Overview
+![Analytics Dashboard UI](assets/images/Frontend_Analytics_1.png)
+![Analytics Dashboard UI](assets/images/Frontend_Analytics_2.png)
 
-![Frontend Example](assets/images/Frontend_Analytics_2.png)
+#### Filtering Behavior
+![Analytics Filters Applied](assets/images/Frontend_Analytics_2.png)
+
+#### API Calls (Network Layer)
+![Analytics API Calls](assets/images/DevTools_Analytics.png)
 
 
 ### Notes and Reflection
@@ -319,7 +330,7 @@ Key point backend never gets exposed to the internet. All traffic goes throug ng
 
 So "/" routes to the frontend, "/api/" routes to the backend. Nginx was my entrypoint and handled all the routing and TLS termination logic.
 
-The certbot is inside a contianer and gets integrated with nginx. Port 80 handled my ACME challenge requests. Certbot generated the certs and stored them in shared volumes. Then nginx used those certs for SSL term. Theres a separate certbot-renew container that runs every 12 hours to auto renew the certs
+The certbot is inside a container and gets integrated with nginx. Port 80 handled my ACME challenge requests. Certbot generated the certs and stored them in shared volumes. Then nginx used those certs for SSL term. Theres a separate certbot-renew container that runs every 12 hours to auto renew the certs
 
 ![NGINX and file struct](assets/images/VM_File_Structure.png)
 
