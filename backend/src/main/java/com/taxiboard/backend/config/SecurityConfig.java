@@ -6,7 +6,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.Customizer;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -22,7 +24,7 @@ public class SecurityConfig {
         .sessionManagement(session -> session
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         )
-        .httpBasic(AbstractHttpConfigurer::disable)
+        .httpBasic(Customizer.withDefaults())
         .formLogin(AbstractHttpConfigurer::disable)
         .exceptionHandling(ex -> ex
             .authenticationEntryPoint((req, res, ex2) -> {
@@ -30,5 +32,10 @@ public class SecurityConfig {
             })
         );
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
