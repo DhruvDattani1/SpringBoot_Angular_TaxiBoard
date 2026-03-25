@@ -1,0 +1,27 @@
+<div style="max-width: 400px; margin: 100px auto;">
+
+  <h2>Login</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div style="margin-bottom: 12px;">
+      <input type="text" formControlName="username" placeholder="Username" />
+    </div>
+
+    <div style="margin-bottom: 12px;">
+      <input type="password" formControlName="password" placeholder="Password" />
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">
+      Login
+    </button>
+
+  </form>
+
+  <div style="margin-top: 12px;">
+    <a (click)="goToRegister()" style="cursor:pointer;">
+      Don’t have an account? Register
+    </a>
+  </div>
+
+</div>
