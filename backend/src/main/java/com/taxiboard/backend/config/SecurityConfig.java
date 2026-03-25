@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -22,8 +23,10 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
         .csrf(csrf -> csrf.disable())
+        .cors(cors -> {})
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/auth/**").permitAll()
+            .requestMatchers("/api/auth/**").permitAll()
+            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().authenticated()
         )
         .sessionManagement(session -> session
