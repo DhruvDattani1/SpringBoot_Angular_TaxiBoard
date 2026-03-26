@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, DestroyRef,inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, DestroyRef,inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { BehaviorSubject, Observable, Subscription, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { Trip, Zone, Vendor, PaymentType, PagedResult } from '../../models/models';
 import { RouterModule } from '@angular/router';
@@ -36,17 +36,29 @@ export class Trips implements OnInit {
   constructor(
     private fb: FormBuilder,
     private api: ApiService,
+    private cdr: ChangeDetectorRef
   ) {}
+
+  isLoading = false;
+  showToast = false;
 
   ngOnInit(): void {
     this.initializeForm();
     this.loadLookups();
 
     this.trips$ = this.paramsSubject.pipe(
+      tap(() => { this.isLoading = true; this.cdr.markForCheck(); }),
       switchMap(params => this.api.getTrips(params)),
       tap(response => {
         this.totalPages = response.page.totalPages;
         this.currentPage = response.page.number;
+        this.isLoading = false;
+        this.showToast = true;
+        this.cdr.markForCheck();
+        setTimeout(() => {
+          this.showToast = false;
+          this.cdr.markForCheck();
+        }, 2000);
       })
     );
 

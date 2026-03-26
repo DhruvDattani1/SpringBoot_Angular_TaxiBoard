@@ -8,11 +8,14 @@ import java.security.Key;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
+import org.springframework.beans.factory.annotation.Value;
+
 
 @Component
 public class JwtUtil {
 
-    private final String SECRET = "03Y4klH5mw7WYZ0a4Ax+mvasY9PVwfvLoJJUERULVmw=";
+    @Value("${jwt.secret}")
+    private String SECRET;
     private final long EXPIRATION = 1000 * 60 * 60; 
 
     private SecretKey getSigningKey() {

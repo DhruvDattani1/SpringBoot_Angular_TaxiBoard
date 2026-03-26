@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { Analytics } from '../../models/models';
 import { RouterModule } from '@angular/router';
 import { dateRangeValidator } from '../../validators/date-range.validator';
-import { ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-analytics',
@@ -24,14 +24,28 @@ export class AnalyticsC implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private api: ApiService
+    private api: ApiService,
+    private cdr: ChangeDetectorRef
   ) {}
+
+  isLoading = false;
+  showToast = false;
 
   ngOnInit(): void {
     this.initializeForm();
 
     this.analytics$ = this.paramsSubject.pipe(
-      switchMap(params => this.api.getAnalytics(params))
+      tap(() => { this.isLoading = true; this.cdr.markForCheck(); }),
+      switchMap(params => this.api.getAnalytics(params)),
+      tap(() => {
+        this.isLoading = false;
+        this.showToast = true;
+        this.cdr.markForCheck();
+         setTimeout(() => {
+           this.showToast = false;
+           this.cdr.markForCheck();
+         }, 2000);
+      }),
     );
 
     this.fetchAnalytics();

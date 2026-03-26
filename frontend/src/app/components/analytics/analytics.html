@@ -1,4 +1,4 @@
-<div style="padding: 16px; max-width: 1200px; margin: 0 auto;">
+<div [class.loading]="isLoading" style="padding: 16px; max-width: 1200px; margin: 0 auto;">
 
   <h2>NYC Taxi Analytics</h2>
 
@@ -58,5 +58,9 @@
   <ng-template #loading>
     <div>Loading analytics...</div>
   </ng-template>
+
+  <div *ngIf="showToast" class="toast">
+    ✓ Data loaded
+  </div>
 
 </div>

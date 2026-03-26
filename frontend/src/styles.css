@@ -150,3 +150,22 @@ ng-template {
   font-size: 0.75rem;
   color: #6b7494;
 }
+
+.loading * {
+  cursor: wait !important;
+}
+
+.toast {
+  position: fixed;
+  bottom: 45px;
+  right: 24px;
+  background-color: rgba(46, 160, 67, 0.2);
+  color: #ffffff;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border-left: 4px solid #2ea043;
+  font-size: 1rem;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+  min-width: 220px;
+}

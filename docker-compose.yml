@@ -1,17 +1,18 @@
 services:
   backend:
-    image: dhruvd22/springboot-angular-taxiboard-backend:latest
+    image: dhruvd22/springboot-angular-taxiboard-backend:2.0
     container_name: backend
     restart: always
     environment:
       - SPRING_DATASOURCE_URL
       - SPRING_DATASOURCE_USERNAME
       - SPRING_DATASOURCE_PASSWORD
+      - JWT_SECRET
     networks:
       - app-network
 
   frontend:
-    image: dhruvd22/springboot-angular-taxiboard-frontend:latest
+    image: dhruvd22/springboot-angular-taxiboard-frontend:2.0
     container_name: frontend
     restart: always
     networks:
