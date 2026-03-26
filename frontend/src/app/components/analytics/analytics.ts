@@ -6,12 +6,15 @@ import { ApiService } from '../../services/api.service';
 import { Analytics } from '../../models/models';
 import { RouterModule } from '@angular/router';
 import { dateRangeValidator } from '../../validators/date-range.validator';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-analytics',
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './analytics.html',
   styleUrl: './analytics.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class AnalyticsC implements OnInit {
 

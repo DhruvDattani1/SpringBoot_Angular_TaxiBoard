@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, DestroyRef,inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, Observable, Subscription, switchMap, tap } from 'rxjs';
@@ -6,6 +6,8 @@ import { ApiService } from '../../services/api.service';
 import { Trip, Zone, Vendor, PaymentType, PagedResult } from '../../models/models';
 import { RouterModule } from '@angular/router';
 import { dateRangeValidator } from '../../validators/date-range.validator';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 
 
 
@@ -14,8 +16,9 @@ import { dateRangeValidator } from '../../validators/date-range.validator';
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './trips.html',
   styleUrl: './trips.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Trips implements OnInit, OnDestroy {
+export class Trips implements OnInit {
 
   filterForm!: FormGroup;
   trips: Trip[] = [];
@@ -28,7 +31,7 @@ export class Trips implements OnInit, OnDestroy {
 
   trips$!: Observable<PagedResult<Trip>>;
   private paramsSubject = new BehaviorSubject<any>({});
-  private subscriptions = new Subscription();
+  private destroyRef = inject(DestroyRef);
 
   constructor(
     private fb: FormBuilder,
@@ -50,10 +53,6 @@ export class Trips implements OnInit, OnDestroy {
     this.fetchTrips();
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
   initializeForm(): void {
     this.filterForm = this.fb.group({
       startDate: [''],
@@ -69,15 +68,15 @@ export class Trips implements OnInit, OnDestroy {
   }
 
   loadLookups(): void {
-    this.subscriptions.add(
-      this.api.getZones().subscribe(data => this.zones = data)
-    );
-    this.subscriptions.add(
-      this.api.getVendors().subscribe(data => this.vendors = data)
-    );
-    this.subscriptions.add(
-      this.api.getPaymentTypes().subscribe(data => this.paymentTypes = data)
-    );
+   this.api.getZones()
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(data => this.zones = data);
+   this.api.getVendors()
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(data => this.vendors = data);
+   this.api.getPaymentTypes()
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(data => this.paymentTypes = data);
   }
 
   fetchTrips(page: number = 0): void {
