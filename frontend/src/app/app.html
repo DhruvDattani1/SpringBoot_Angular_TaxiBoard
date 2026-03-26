@@ -1,1 +1,41 @@
-<router-outlet />
+<div class="app-container">
+
+  <header class="app-header">
+
+    <div class="app-title">NYC Yellow Taxi Trips</div>
+
+    <div class="nav-buttons">
+
+      <ng-container *ngIf="isLoggedIn(); else loggedOut">
+
+        <button (click)="goToTrips()">Trips</button>
+        <button (click)="goToAnalytics()">Analytics</button>
+        <button (click)="logout()">Logout</button>
+
+      </ng-container>
+
+      <ng-template #loggedOut>
+
+        <button *ngIf="isLoginPage()" (click)="goToRegister()">
+          Register
+        </button>
+
+        <button *ngIf="isRegisterPage()" (click)="goToLogin()">
+          Login
+        </button>
+
+      </ng-template>
+
+    </div>
+
+  </header>
+
+  <main class="app-main">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="app-footer">
+    Built by Dhruv Dattani • Angular + Spring Boot • 2026
+  </footer>
+
+</div>

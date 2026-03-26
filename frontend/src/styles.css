@@ -19,7 +19,7 @@ h2 {
   padding-bottom: 12px;
 }
 
-/* Form inputs */
+
 input, select {
   background-color: #252b3d;
   border: 1px solid #3a4260;
@@ -38,7 +38,6 @@ input:focus, select:focus {
   border-color: #c9a84c;
 }
 
-/* Buttons */
 button {
   background-color: #2e4a7a;
   color: #d4d8e8;
@@ -68,7 +67,6 @@ button[type="button"]:hover {
   background-color: #3a4260;
 }
 
-/* Table */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -98,20 +96,57 @@ tbody tr:hover {
   background-color: #252b3d;
 }
 
-/* KPI Cards */
 div[style*="border: 1px solid #ccc"] {
   background-color: #252b3d !important;
   border: 1px solid #3a4260 !important;
   border-radius: 8px;
 }
 
-/* Pagination */
+
 span {
   color: #d4d8e8;
   font-size: 0.875rem;
 }
 
-/* Loading */
+
 ng-template {
+  color: #6b7494;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  padding: 16px;
+  border-bottom: 1px solid #2d3450;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #c9a84c;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.app-main {
+  flex: 1;
+  padding: 16px;
+}
+
+.app-footer {
+  padding: 12px;
+  border-top: 1px solid #2d3450;
+  text-align: center;
+  font-size: 0.75rem;
   color: #6b7494;
 }

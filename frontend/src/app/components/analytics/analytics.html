@@ -2,10 +2,6 @@
 
   <h2>NYC Taxi Analytics</h2>
 
-  <button routerLink="/trips" style="margin-bottom:16px;">
-    View Trips
-  </button>
-
   <form [formGroup]="filterForm" (ngSubmit)="applyFilters()">
     <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
       <input type="date" formControlName="startDate" min="2025-01-01" max="2025-01-31" />
