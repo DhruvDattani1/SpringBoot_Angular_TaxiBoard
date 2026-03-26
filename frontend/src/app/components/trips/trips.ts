@@ -116,6 +116,12 @@ export class Trips implements OnInit, OnDestroy {
       this.fetchTrips(this.currentPage - 1);
     }
   }
+
+  resetFilters(): void {
+    this.initializeForm();
+    this.currentPage = 0;
+    this.fetchTrips(0);
+  }
 }
 
 
